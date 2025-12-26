@@ -1506,72 +1506,7 @@ http://127.0.0.1:8000/products
 
 ## Output
 
-### Categories All Pages
-
-**category create page**
-
-<img width="1918" height="1026" alt="Screenshot 2025-12-26 100848" src="https://github.com/user-attachments/assets/ed277fa4-fb21-4a75-9c35-0ea8733d19f4" />
-
-
-**category index page**
-
-<img width="1919" height="1028" alt="Screenshot 2025-12-26 100912" src="https://github.com/user-attachments/assets/3b9677fd-4bff-4dc0-bbe8-adbd8fbe8ea7" />  
-
-
-**category edit page**
-
-<img width="1919" height="1029" alt="Screenshot 2025-12-26 101102" src="https://github.com/user-attachments/assets/17b27e65-57ef-4317-a796-baf7b3f8f59e" />
-
- 
-<img width="1919" height="1033" alt="Screenshot 2025-12-26 101113" src="https://github.com/user-attachments/assets/52dfbe7a-5e85-4dc8-9d18-9b63c8e196cc" />
-
-
-**category show page**
-
-<img width="1919" height="1029" alt="Screenshot 2025-12-26 101131" src="https://github.com/user-attachments/assets/500a4ff5-3d69-45fa-903c-fedbc77254c2" />
-
-
-**category delete page**
-
-<img width="1918" height="1027" alt="Screenshot 2025-12-26 101156" src="https://github.com/user-attachments/assets/e2962b7e-f524-4e29-b10b-1f299c6f1519" />
-
-<img width="1918" height="1030" alt="Screenshot 2025-12-26 101207" src="https://github.com/user-attachments/assets/406f3dbc-4700-4689-9d5a-d9c53d4b9b10" />
-
----
-
-### Products All Pages
-
-**product create page**
-
-<img width="1919" height="1031" alt="Screenshot 2025-12-26 111118" src="https://github.com/user-attachments/assets/98a96de8-798b-4620-b5b1-a065fab21651" />
-
-
-**product index page**
-
-<img width="1919" height="1030" alt="Screenshot 2025-12-26 101645" src="https://github.com/user-attachments/assets/8e7d3d9d-8f0d-4306-8340-88d96de82459" />
-
-
-**product edit page**
-
-<img width="1919" height="1036" alt="Screenshot 2025-12-26 111245" src="https://github.com/user-attachments/assets/cb9ade3e-51ec-4cf5-85db-a5949f083e97" />
-
-<img width="1919" height="1032" alt="Screenshot 2025-12-26 111327" src="https://github.com/user-attachments/assets/f68bb4ca-faf3-4adb-a854-87aa72bec57d" />
-
-
-**product show page**
-
-<img width="1919" height="1030" alt="Screenshot 2025-12-26 111420" src="https://github.com/user-attachments/assets/48ca31cc-e013-4fcb-aaac-e81bd2488bd5" />
-
-
-**product delete page**
-
-<img width="1919" height="1027" alt="Screenshot 2025-12-26 111454" src="https://github.com/user-attachments/assets/e4ae1a35-6a9a-4abe-a5a2-e846357eaa75" />
-
-<img width="1919" height="1032" alt="Screenshot 2025-12-26 111504" src="https://github.com/user-attachments/assets/0004d61b-b69a-4ed0-aaba-37c91fb62da6" />
-
----
-
-### Filter by Category
+#### Filter by Category in Product Index Page
 
 <img width="1919" height="1030" alt="Screenshot 2025-12-26 101901" src="https://github.com/user-attachments/assets/794676b9-a60e-465d-863e-bd6e057057ac" />
 
