@@ -1517,3 +1517,7 @@ http://127.0.0.1:8000/products
 ---
 
 Your PHP_Laravel12_Live_Filter_Data_Using_Datatables Project is Now Ready!
+<<<<<<< HEAD
+=======
+
+>>>>>>> development

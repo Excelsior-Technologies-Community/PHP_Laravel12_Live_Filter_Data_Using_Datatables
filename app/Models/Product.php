@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     // Fields that are allowed for mass assignment (create/update)
-    protected $fillable = ['name', 'description', 'price', 'category_id'];
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'category_id'
+    ];
 
     /**
      * Relationship Method
