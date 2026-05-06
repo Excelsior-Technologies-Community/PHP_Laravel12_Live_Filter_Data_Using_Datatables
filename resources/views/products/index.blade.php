@@ -1,48 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Product List</title>
+    <meta charset="UTF-8">
+    <title>Product Management</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        body {
-            background-color: #f8f9fa;
+        body { background-color: #f8f9fa; }
+        .card { border-radius: 1rem; border: none; }
+        .card-header { 
+            background: linear-gradient(90deg, #007bff, #6610f2); 
+            color: #fff; 
+            border-top-left-radius: 1rem; 
+            border-top-right-radius: 1rem; 
         }
-
-        .card {
-            border-radius: 1rem;
-        }
-
-        .card-header {
-            background: linear-gradient(90deg, #007bff, #6610f2);
-            color: #fff;
-            border-top-left-radius: 1rem;
-            border-top-right-radius: 1rem;
-        }
-
-        #productTable_wrapper {
-            margin-top: 1rem;
-        }
-
-        table.dataTable tbody tr:hover {
-            background-color: #e9f5ff;
-        }
-
-        .dataTables_filter input {
-            width: 300px;
-        }
-
-        .btn-action {
-            margin-right: 3px;
-        }
+        .dataTables_filter input { width: 300px !important; border-radius: 5px; border: 1px solid #ddd; }
+        table.dataTable thead th { background-color: #f1f4f9; }
     </style>
 </head>
 
@@ -50,19 +29,17 @@
 
     <div class="container mt-5">
         <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">Product List</h4>
+            <div class="card-header d-flex justify-content-between align-items-center p-3">
+                <h4 class="mb-0">Product Inventory</h4>
                 <a href="{{ route('products.create') }}" class="btn btn-light text-primary fw-bold">
-                    <i class="bi bi-plus-circle"></i> Add Product
+                    <i class="bi bi-plus-circle"></i> Add New Product
                 </a>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
 
-                <!-- Filters Row -->
-                <div class="row mb-3 g-3">
-                    <!-- Category Filter -->
+                <div class="row mb-4 g-3">
                     <div class="col-md-3">
-                        <label class="form-label fw-semibold mb-0">Category:</label>
+                        <label class="form-label fw-bold">Category Filter</label>
                         <select id="categoryFilter" class="form-select">
                             <option value="">All Categories</option>
                             @foreach($categories as $category)
@@ -70,85 +47,84 @@
                             @endforeach
                         </select>
                     </div>
-
-                    <!-- Price Range Filter -->
                     <div class="col-md-2">
-                        <label class="form-label fw-semibold mb-0">Min Price:</label>
-                        <input type="number" id="min_price" class="form-control" placeholder="0">
+                        <label class="form-label fw-bold">Min Price</label>
+                        <input type="number" id="min_price" class="form-control" placeholder="Min">
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label fw-semibold mb-0">Max Price:</label>
-                        <input type="number" id="max_price" class="form-control" placeholder="0">
+                        <label class="form-label fw-bold">Max Price</label>
+                        <input type="number" id="max_price" class="form-control" placeholder="Max">
                     </div>
-
-                    <!-- Sort By Date -->
                     <div class="col-md-2">
-                        <label class="form-label fw-semibold mb-0">Sort By Date:</label>
+                        <label class="form-label fw-bold">Sort Order</label>
                         <select id="sort_date" class="form-select">
                             <option value="">Default</option>
-                            <option value="asc">Oldest</option>
-                            <option value="desc">Newest</option>
+                            <option value="asc">Oldest First</option>
+                            <option value="desc">Newest First</option>
                         </select>
                     </div>
-
-                    <!-- Filter Button -->
                     <div class="col-md-3 d-flex align-items-end">
-                        <button id="filterBtn" class="btn btn-primary w-100">Apply Filters</button>
+                        <button id="filterBtn" class="btn btn-primary w-100"><i class="bi bi-funnel"></i> Apply Filters</button>
                     </div>
                 </div>
 
-                <!-- Export Buttons -->
-                <div class="mb-3 text-end">
-                    <a href="{{ route('products.export', 'csv') }}" class="btn btn-success">CSV</a>
-                    <a href="{{ route('products.export', 'xlsx') }}" class="btn btn-success">Excel</a>
-                    <a href="{{ route('products.export', 'pdf') }}" class="btn btn-danger">PDF</a>
+                <div class="mb-3 d-flex justify-content-end gap-2">
+                    <button class="btn btn-outline-success btn-export" data-type="csv"><i class="bi bi-filetype-csv"></i> CSV</button>
+                    <button class="btn btn-outline-success btn-export" data-type="xlsx"><i class="bi bi-file-earmark-excel"></i> Excel</button>
+                    <button class="btn btn-outline-danger btn-export" data-type="pdf"><i class="bi bi-file-pdf"></i> PDF</button>
                 </div>
 
-                <!-- Product Table -->
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered text-center" id="productTable">
-                        <thead class="table-primary">
+                    <table class="table table-hover table-bordered align-middle text-center" id="productTable">
+                        <thead class="table-light">
                             <tr>
-                                <th>Id</th>
-                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Product Name</th>
                                 <th>Description</th>
                                 <th>Price</th>
                                 <th>Category</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
+                                <th>Created Date</th>
+                                <th width="150px">Actions</th>
                             </tr>
                         </thead>
-                        <tfoot>
+                        <tbody></tbody>
+                        <tfoot class="bg-light fw-bold">
                             <tr>
-                                <th colspan="3" class="text-end">Total Value:</th>
-                                <th colspan="4" id="totalValue">0</th>
+                                <td colspan="3" class="text-end">Page Total:</td>
+                                <td colspan="4" id="totalValue" class="text-start text-primary">0.00</td>
                             </tr>
                         </tfoot>
-                        <tbody></tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- jQuery & DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
     <script>
         $(function () {
-            // Setup CSRF for AJAX
             $.ajaxSetup({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
             });
 
-            // Initialize DataTable
+            @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: "{{ session('success') }}",
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            @endif
+
             let table = $('#productTable').DataTable({
                 processing: true,
                 serverSide: true,
+                searchDelay: 0, 
                 ajax: {
-                    url: "{{ route('products.index') }}",
+                    url: "{{ route('products.data') }}",
                     data: function (d) {
                         d.category_id = $('#categoryFilter').val();
                         d.min_price = $('#min_price').val();
@@ -157,35 +133,63 @@
                     }
                 },
                 columns: [
-                    { data: 'id', orderable: false, searchable: false },
-                    { data: 'name' },
-                    { data: 'description' },
-                    { data: 'price' },
-                    { data: 'category' },
-                    { data: 'created_at' },
-                    { data: 'actions', orderable: false, searchable: false }
+                    { data: 'id', name: 'id' },
+                    { data: 'name', name: 'name' },
+                    { data: 'description', name: 'description' },
+                    { data: 'price', name: 'price' },
+                    { data: 'category', name: 'category', searchable: false },
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'actions', name: 'actions', orderable: false, searchable: false }
                 ],
                 language: {
                     search: "_INPUT_",
-                    searchPlaceholder: "Search products..."
+                    searchPlaceholder: "Instant search..."
                 },
-                lengthMenu: [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "All"]], // <-- Add this line
                 drawCallback: function (settings) {
-                    // Calculate total price for visible rows
-                    let total = this.api().column(3, { page: 'current' }).data().reduce(function (a, b) {
+                    let api = this.api();
+                    let total = api.column(3, { page: 'current' }).data().reduce(function (a, b) {
                         return parseFloat(a) + parseFloat(b);
                     }, 0);
-                    $('#totalValue').html(total.toFixed(2));
+                    $('#totalValue').html('$' + total.toLocaleString(undefined, {minimumFractionDigits: 2}));
                 }
             });
 
-            // Apply filters
-            $('#filterBtn, #categoryFilter, #min_price, #max_price, #sort_date').on('change click', function () {
+            $('#filterBtn, #categoryFilter, #sort_date').on('change click', function () {
                 table.ajax.reload();
+            });
+
+            $(document).on('click', '.btn-delete', function (e) {
+                e.preventDefault();
+                let id = $(this).data('id');
+                
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this product!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(`#delete-form-${id}`).submit();
+                    }
+                });
+            });
+
+            $('.btn-export').on('click', function (e) {
+                e.preventDefault();
+                let type = $(this).data('type');
+                let url = "{{ route('products.export', ':type') }}".replace(':type', type);
+                let params = $.param({
+                    category_id: $('#categoryFilter').val(),
+                    min_price: $('#min_price').val(),
+                    max_price: $('#max_price').val(),
+                    sort_date: $('#sort_date').val()
+                });
+                window.location.href = url + '?' + params;
             });
         });
     </script>
-
 </body>
-
 </html>
